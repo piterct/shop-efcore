@@ -1,6 +1,14 @@
-﻿namespace Shop.API.Controllers
+﻿using Microsoft.AspNetCore.Mvc;
+
+namespace Shop.API.Controllers
 {
-    public class CategoryController
+    [Route("categories")]
+    public class CategoryController : ControllerBase
     {
+        [Route("")]
+        public string MyMethod()
+        {
+            return "Hello World!";
+        }
     }
 }
