@@ -12,11 +12,18 @@ namespace Shop.API.Controllers
             return "Hello World!";
         }
 
+        [HttpGet]
+        [Route("{id:int}")]
+        public string GetById(int id)
+        {
+            return "GET " + id.ToString();
+        }
+
         [HttpPost]
         [Route("")]
         public string Post()
         {
-            return "Hello World!";
+            return "POST";
         }
 
         [HttpPut]
