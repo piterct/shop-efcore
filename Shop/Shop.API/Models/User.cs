@@ -13,7 +13,7 @@ namespace Shop.API.Models
         [MaxLength(20, ErrorMessage = "Maximum characters  is 20")]
         [MinLength(3, ErrorMessage = "Minimum characters  is 3")]
         public string Password { get; set; }
-
+        [MinLength(3, ErrorMessage = "Minimum characters  is 3")]
         public string Role { get; set; }
     }
 }
