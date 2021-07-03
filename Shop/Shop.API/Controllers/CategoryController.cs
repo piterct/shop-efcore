@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Shop.API.Models;
 
 namespace Shop.API.Controllers
 {
@@ -21,9 +22,9 @@ namespace Shop.API.Controllers
 
         [HttpPost]
         [Route("")]
-        public string Post()
+        public Category Post([FromBody] Category model)
         {
-            return "POST";
+            return model;
         }
 
         [HttpPut]
