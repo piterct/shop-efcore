@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Shop.API.Data;
 using Shop.API.Models;
 using System;
@@ -48,7 +49,10 @@ namespace Shop.API.Controllers
 
         [HttpPut]
         [Route("{id:int}")]
-        public async Task<ActionResult<List<Category>>> Put(int id, [FromBody] Category model)
+        public async Task<ActionResult<List<Category>>> Put(
+            int id,
+            [FromBody] Category model,
+             [FromServices] DataContext context)
         {
             if (id != model.Id)
                 return NotFound(new { message = "Category not found!" });
@@ -56,7 +60,23 @@ namespace Shop.API.Controllers
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            return Ok(model);
+            try
+            {
+                context.Entry<Category>(model).State = EntityState.Modified;
+                await context.SaveChangesAsync();
+                return Ok(model);
+            }
+
+            catch (DbUpdateConcurrencyException)
+            {
+                return BadRequest(new { message = "This value already updated ! " });
+            }
+
+            catch (Exception)
+            {
+                return BadRequest(new { message = "Could not update category" });
+            }
+
         }
 
         [HttpDelete]
