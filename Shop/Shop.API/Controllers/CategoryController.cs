@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Shop.API.Data;
 using Shop.API.Models;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -24,10 +25,14 @@ namespace Shop.API.Controllers
 
         [HttpPost]
         [Route("")]
-        public async Task<ActionResult<List<Category>>> Post([FromBody] Category model)
+        public async Task<ActionResult<List<Category>>> Post([FromBody] Category model,
+            [FromServices] DataContext context)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
+
+            context.Categories.Add(model);
+            await context.SaveChangesAsync();
 
             return Ok(model);
         }
