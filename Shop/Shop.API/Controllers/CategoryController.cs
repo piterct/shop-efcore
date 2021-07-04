@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Shop.API.Data;
 using Shop.API.Models;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -31,10 +32,18 @@ namespace Shop.API.Controllers
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            context.Categories.Add(model);
-            await context.SaveChangesAsync();
+            try
+            {
+                context.Categories.Add(model);
+                await context.SaveChangesAsync();
+                return Ok(model);
+            }
 
-            return Ok(model);
+            catch (Exception)
+            {
+                return BadRequest(new { message = "Could not create category" });
+            }
+
         }
 
         [HttpPut]
