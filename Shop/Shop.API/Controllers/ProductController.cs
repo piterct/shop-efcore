@@ -14,8 +14,17 @@ namespace Shop.API.Controllers
         [Route("")]
         public async Task<ActionResult<List<Product>>> Get([FromServices] DataContext context)
         {
-            var products = await context.Products.AsNoTracking().ToListAsync();
+            var products = await context.Products.Include(x => x.Category).AsNoTracking().ToListAsync();
             return Ok(products);
+        }
+
+        [HttpGet]
+        [Route("{id:int}")]
+        public async Task<ActionResult<Product>> GetById(int id,
+          [FromServices] DataContext context)
+        {
+            var product = await context.Products.AsNoTracking().FirstOrDefaultAsync();
+            return Ok(product);
         }
     }
 }
