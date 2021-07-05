@@ -21,9 +21,11 @@ namespace Shop.API.Controllers
 
         [HttpGet]
         [Route("{id:int}")]
-        public async Task<ActionResult<Category>> GetById(int id)
+        public async Task<ActionResult<Category>> GetById(int id,
+            [FromServices] DataContext context)
         {
-            return new Category();
+            var categories = await context.Categories.AsNoTracking().FirstOrDefaultAsync();
+            return Ok(categories);
         }
 
         [HttpPost]
