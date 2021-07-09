@@ -39,5 +39,24 @@ namespace Shop.API.Controllers
                 .ToListAsync();
             return Ok(products);
         }
+
+        [HttpPost]
+        [Route("")]
+        public async Task<ActionResult<Product>> Post([FromBody] Product model,
+           [FromServices] DataContext context)
+        {
+            if (ModelState.IsValid)
+            {
+                context.Products.Add(model);
+                await context.SaveChangesAsync();
+                return Ok(model);
+            }
+
+            else
+            {
+                return BadRequest(ModelState);
+            }
+
+        }
     }
 }
