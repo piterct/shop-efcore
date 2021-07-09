@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Shop.API.Data;
 using Shop.API.Models;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Shop.API.Controllers
@@ -23,8 +24,20 @@ namespace Shop.API.Controllers
         public async Task<ActionResult<Product>> GetById(int id,
           [FromServices] DataContext context)
         {
-            var product = await context.Products.Include(x=> x.Category).AsNoTracking().FirstOrDefaultAsync();
+            var product = await context.Products.Include(x => x.Category).AsNoTracking().FirstOrDefaultAsync();
             return Ok(product);
+        }
+
+        [HttpGet]
+        [Route("categories/{id:int}")]
+        public async Task<ActionResult<List<Product>>> GetByCategory([FromServices] DataContext context, int id)
+        {
+            var products = await context.Products
+                .Include(x => x.Category)
+                .AsNoTracking()
+                .Where(x => x.CategoryId == id)
+                .ToListAsync();
+            return Ok(products);
         }
     }
 }
