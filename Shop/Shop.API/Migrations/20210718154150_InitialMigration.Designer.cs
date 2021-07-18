@@ -9,8 +9,8 @@ using Shop.API.Data;
 namespace Shop.API.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20210717185457_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20210718154150_InitialMigration")]
+    partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -68,9 +68,10 @@ namespace Shop.API.Migrations
 
             modelBuilder.Entity("Shop.API.Models.User", b =>
                 {
-                    b.Property<string>("Username")
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Password")
                         .IsRequired()
@@ -80,7 +81,12 @@ namespace Shop.API.Migrations
                     b.Property<string>("Role")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Username");
+                    b.Property<string>("Username")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
+
+                    b.HasKey("Id");
 
                     b.ToTable("Users");
                 });
