@@ -52,7 +52,6 @@ namespace Shop.API.Controllers
 
             return new
             {
-                user = user,
                 token = token
             };
         }
