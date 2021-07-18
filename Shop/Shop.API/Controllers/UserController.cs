@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Shop.API.Controllers
 {
-    [Route("v1/users")]
+    [Route("users")]
     public class UserController : ControllerBase
     {
         [HttpPost]
