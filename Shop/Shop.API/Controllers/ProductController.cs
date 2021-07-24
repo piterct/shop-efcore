@@ -27,7 +27,7 @@ namespace Shop.API.Controllers
         public async Task<ActionResult<Product>> GetById(int id,
           [FromServices] DataContext context)
         {
-            var product = await context.Products.Include(x => x.Category).AsNoTracking().FirstOrDefaultAsync();
+            var product = await context.Products.Include(x => x.Category).AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
             return Ok(product);
         }
 
