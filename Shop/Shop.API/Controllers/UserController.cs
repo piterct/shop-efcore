@@ -30,6 +30,7 @@ namespace Shop.API.Controllers
         [HttpPost]
         [Route("")]
         [AllowAnonymous]
+        //[Authorize(Roles = "manager")]
         public async Task<ActionResult<User>> Post([FromServices] DataContext context, [FromBody] User model)
         {
             if (!ModelState.IsValid)
@@ -47,6 +48,31 @@ namespace Shop.API.Controllers
             catch (Exception)
             {
                 return BadRequest(new { message = "Could not create user" });
+            }
+        }
+
+
+        [HttpPut]
+        [Route("{id:int}")]
+        [Authorize(Roles = "manager")]
+        public async Task<ActionResult<dynamic>> Put([FromServices] DataContext context, int id, [FromBody] User model)
+        {
+
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            if (id != model.Id)
+                return NotFound(new { message = "User not found! " });
+
+            try
+            {
+                context.Entry(model).State = EntityState.Modified;
+                await context.SaveChangesAsync();
+                return model;
+            }
+            catch (Exception)
+            {
+                return BadRequest(new { message = "Could not update user" });
             }
         }
 
