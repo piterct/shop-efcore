@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Shop.API.Data;
 using Shop.API.Models;
@@ -13,6 +14,7 @@ namespace Shop.API.Controllers
     {
         [HttpGet]
         [Route("")]
+        [AllowAnonymous]
         public async Task<ActionResult<List<Category>>> Get([FromServices] DataContext context)
         {
             var categories = await context.Categories.AsNoTracking().ToListAsync();
