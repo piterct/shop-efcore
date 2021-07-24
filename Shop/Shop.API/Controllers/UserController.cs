@@ -5,6 +5,7 @@ using Shop.API.Data;
 using Shop.API.Models;
 using Shop.API.Services;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -13,6 +14,19 @@ namespace Shop.API.Controllers
     [Route("users")]
     public class UserController : ControllerBase
     {
+        [HttpGet]
+        [Route("")]
+        [Authorize(Roles = "manager")]
+        public async Task<ActionResult<List<User>>> Get([FromServices] DataContext context)
+        {
+            var users = await context
+                .Users
+                .AsNoTracking()
+                .ToListAsync();
+
+            return users;
+        }
+
         [HttpPost]
         [Route("")]
         [AllowAnonymous]
