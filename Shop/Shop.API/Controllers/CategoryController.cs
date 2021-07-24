@@ -23,6 +23,7 @@ namespace Shop.API.Controllers
 
         [HttpGet]
         [Route("{id:int}")]
+        [AllowAnonymous]
         public async Task<ActionResult<Category>> GetById(int id,
             [FromServices] DataContext context)
         {
@@ -32,6 +33,7 @@ namespace Shop.API.Controllers
 
         [HttpPost]
         [Route("")]
+        [Authorize(Roles = "employee")]
         public async Task<ActionResult<List<Category>>> Post([FromBody] Category model,
             [FromServices] DataContext context)
         {
@@ -54,6 +56,7 @@ namespace Shop.API.Controllers
 
         [HttpPut]
         [Route("{id:int}")]
+        [Authorize(Roles = "employee")]
         public async Task<ActionResult<List<Category>>> Put(
             int id,
             [FromBody] Category model,
@@ -86,6 +89,7 @@ namespace Shop.API.Controllers
 
         [HttpDelete]
         [Route("{id:int}")]
+        [Authorize(Roles = "employee")]
         public async Task<ActionResult<List<Category>>> Delete(
             int id,
              [FromServices] DataContext context)
