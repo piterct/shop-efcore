@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Shop.API.Controllers
 {
-    [Route("categories")]
+    [Route("v1/categories")]
     public class CategoryController : ControllerBase
     {
         [HttpGet]
