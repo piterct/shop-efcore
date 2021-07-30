@@ -45,6 +45,9 @@ namespace Shop.API.Controllers
 
                 context.Users.Add(model);
                 await context.SaveChangesAsync();
+
+                model.Password = "";
+
                 return Ok(model);
             }
 
