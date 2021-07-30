@@ -47,7 +47,6 @@ namespace Shop.API.Controllers
                 await context.SaveChangesAsync();
 
                 model.Password = "";
-
                 return Ok(model);
             }
 
